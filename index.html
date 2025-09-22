@@ -22,7 +22,6 @@
     *{box-sizing:border-box}
     body{
       margin:0;min-height:100vh;color:#eee;
-      /* depth + vignette */
       background:
         radial-gradient(1200px 600px at 50% -10%, rgba(214,168,90,0.06), transparent 60%),
         radial-gradient(1000px 500px at 80% 120%, rgba(255,255,255,0.03), transparent 70%),
@@ -31,7 +30,7 @@
     /* optional ultra-subtle grain */
     body::before{
       content:""; position:fixed; inset:0; pointer-events:none; opacity:.05;
-      background-image: url("data:image/svg+xml;utf8,      <svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'>      <filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter>      <rect width='100%' height='100%' filter='url(%23n)' opacity='0.15'/></svg>");
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.15'/></svg>");
     }
 
     /* Header (centered, elegant divider) */
@@ -53,7 +52,7 @@
       font-family:"Playfair Display", Georgia, "Times New Roman", serif;
       font-size:28px; letter-spacing:0.5px; margin:0; color:var(--headline);
     }
-    p.lead{margin:0;color:var(--muted);font-size:17px;line-height: 1.6;max-width: 720px;}
+    p.lead{margin:0;color:var(--muted);font-size:17px;line-height:1.6;max-width:720px;}
 
     main{display:grid;grid-template-columns:360px 1fr;gap:28px;padding:28px}
 
@@ -88,28 +87,28 @@
       display:flex;gap:18px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
     }
 
-    /* Bottle shot panel (framed, moody) */
+    /* Bottle shot panel */
     .bowl {
-  flex: 0 0 auto;
-  border-radius: 12px;
-  position: relative;
-  overflow: hidden;
-  background: none;
-  border: 1px solid rgba(214,168,90,0.12);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.20);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 500px;   /* make it bigger */
-  margin: 0 auto;     /* center it */
-}
-.bowl::after{ display:none; }                 /* ⬅️ remove vignette overlay */
-.bowl img {
-  width: 100%;
-  height: auto;       /* keep proportions */
-  border-radius: 12px;
-  filter: none;
-}
+      flex: 0 0 auto;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      background: none;
+      border: 1px solid rgba(214,168,90,0.12);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.20);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 500px;   /* adjust size here */
+      margin: 0 auto;     /* center it */
+    }
+    .bowl::after{ display:none; }
+    .bowl img {
+      width: 100%;
+      height: auto;       /* keep proportions */
+      border-radius: 12px;
+      filter: none;
+    }
 
     .mix-list{flex:1;padding:8px;display:flex;flex-direction:column;gap:8px}
     .mix-row{
@@ -117,7 +116,7 @@
       background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.06)
     }
 
-    /* Buttons (muted gold, focus, hover glow) */
+    /* Buttons */
     .controls{display:flex;gap:12px;align-items:center}
     button{
       background: linear-gradient(180deg, rgba(214,168,90,0.9), rgba(214,168,90,0.7));
@@ -127,7 +126,7 @@
       color: #fff; cursor: pointer; font-weight: 700; letter-spacing:.2px;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-    #mix{ padding:12px 18px; } /* primary action a tad bigger */
+    #mix{ padding:12px 18px; }
     button:hover{ transform: translateY(-2px); box-shadow: 0 6px 18px rgba(214,168,90,0.25); }
     button:focus-visible{ outline:2px solid rgba(214,168,90,0.65); outline-offset:2px; }
     button.ghost{
@@ -135,9 +134,7 @@
       color: var(--muted); font-weight: 600;
     }
 
-    footer{padding:18px 32px;color:var(--muted);font-size:13px}
-
-    /* Reveal (label-like) */
+    /* Reveal */
     .reveal{
       margin-top:12px;padding:14px;border-radius:12px;
       background:linear-gradient(180deg, rgba(214,168,90,0.06), rgba(214,168,90,0.02));
@@ -151,11 +148,11 @@
     }
     .reveal p{margin:8px 0 0;font-size:13px;color:#eee; line-height:1.55}
 
-    /* Gentle motion for reveal */
+    /* Reveal animation */
     @keyframes fadeUp{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
     #reveal[style*="display: block"]{ animation: fadeUp .28s ease-out; }
 
-    /* Accessibility: respect reduced motion */
+    /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
       *{animation:none !important; transition:none !important;}
     }
@@ -191,7 +188,8 @@
     <section class="panel stage">
       <div class="mixer">
         <div class="bowl">
-          <img src="/Users/milanamironova/Desktop/angels-share-mixer/AngelsShare.png" alt="Angels' Share" decoding="async">
+          <!-- IMPORTANT: use a relative path that matches the file name in your repo -->
+          <img src="AngelsShare.png" alt="Angels' Share" decoding="async">
         </div>
 
         <div class="mix-list">
@@ -303,8 +301,6 @@
       title.textContent = `Angels' Share — ${lead}`;
       text.textContent = sensory + " " + emotional;
       reveal.style.display = 'block';
-
-      document.getElementById('export').textContent = 'Copy description';
     });
 
     renderIngredients();
