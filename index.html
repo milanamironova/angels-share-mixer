@@ -22,6 +22,7 @@
     *{box-sizing:border-box}
     body{
       margin:0;min-height:100vh;color:#eee;
+      /* depth + vignette */
       background:
         radial-gradient(1200px 600px at 50% -10%, rgba(214,168,90,0.06), transparent 60%),
         radial-gradient(1000px 500px at 80% 120%, rgba(255,255,255,0.03), transparent 70%),
@@ -30,7 +31,7 @@
     /* optional ultra-subtle grain */
     body::before{
       content:""; position:fixed; inset:0; pointer-events:none; opacity:.05;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.15'/></svg>");
+      background-image: url("data:image/svg+xml;utf8,      <svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'>      <filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter>      <rect width='100%' height='100%' filter='url(%23n)' opacity='0.15'/></svg>");
     }
 
     /* Header (centered, elegant divider) */
@@ -52,7 +53,7 @@
       font-family:"Playfair Display", Georgia, "Times New Roman", serif;
       font-size:28px; letter-spacing:0.5px; margin:0; color:var(--headline);
     }
-    p.lead{margin:0;color:var(--muted);font-size:17px;line-height:1.6;max-width:720px;}
+    p.lead{margin:0;color:var(--muted);font-size:17px;line-height: 1.6;max-width: 720px;}
 
     main{display:grid;grid-template-columns:360px 1fr;gap:28px;padding:28px}
 
@@ -116,7 +117,7 @@
       background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.06)
     }
 
-    /* Buttons */
+    /* Buttons (muted gold, focus, hover glow) */
     .controls{display:flex;gap:12px;align-items:center}
     button{
       background: linear-gradient(180deg, rgba(214,168,90,0.9), rgba(214,168,90,0.7));
@@ -126,7 +127,7 @@
       color: #fff; cursor: pointer; font-weight: 700; letter-spacing:.2px;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-    #mix{ padding:12px 18px; }
+    #mix{ padding:12px 18px; } /* primary action a tad bigger */
     button:hover{ transform: translateY(-2px); box-shadow: 0 6px 18px rgba(214,168,90,0.25); }
     button:focus-visible{ outline:2px solid rgba(214,168,90,0.65); outline-offset:2px; }
     button.ghost{
@@ -134,7 +135,9 @@
       color: var(--muted); font-weight: 600;
     }
 
-    /* Reveal */
+    footer{padding:18px 32px;color:var(--muted);font-size:13px}
+
+    /* Reveal (label-like) */
     .reveal{
       margin-top:12px;padding:14px;border-radius:12px;
       background:linear-gradient(180deg, rgba(214,168,90,0.06), rgba(214,168,90,0.02));
@@ -148,11 +151,11 @@
     }
     .reveal p{margin:8px 0 0;font-size:13px;color:#eee; line-height:1.55}
 
-    /* Reveal animation */
+    /* Gentle motion for reveal */
     @keyframes fadeUp{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
     #reveal[style*="display: block"]{ animation: fadeUp .28s ease-out; }
 
-    /* Reduced motion */
+    /* Accessibility: respect reduced motion */
     @media (prefers-reduced-motion: reduce){
       *{animation:none !important; transition:none !important;}
     }
@@ -211,13 +214,62 @@
 
   <script>
     const ingredients = [
-      {id:'cognac', name:'Cognac', emoji:'🥃', color:'#b97b3c', short:'Like a memory of a family celebration', poetic:'Like a golden laugh when a family gathers together for New Year's Eve.'},
-      {id:'cinnamon', name:'Cinnamon', emoji:'🌶️', color:'#b24e1b', short:'Like a smell of your favourite Christmas bun', poetic:'Like a box of cinammon buns which you are so eager to eat.'},
-      {id:'praline', name:'Praline', emoji:'🍬', color:'#c78f62', short:'Sugared, soft and round - like a dream of a sweet future', poetic:'Memories of childhood candied afternoons and dreams about future suprises — sweet and slightly smoky.'},
-      {id:'vanilla', name:'Vanilla', emoji:'🌿', color:'#e6cfa7', short:'Comforting and familiar - like a taste of ice cream', poetic:'A refreshing moment for hot sunny days.'},
-      {id:'oak', name:'Oak wood', emoji:'🌳', color:'#6b4a32', short:'Dry wood - like a walk in the forest searching for berries', poetic:'A long walk in the forest on a way to the beach.'},
-      {id:'tonka', name:'Tonka bean', emoji:'🌰', color:'#b58f6e', short:'Sweetness with almond hints - like a dream of a trip to a different continent', poetic:'A unique smell resembling something interesting, which you are eager to know.'},
-      {id:'sandal', name:'Sandalwood', emoji:'🪵', color:'#8b6a54', short:'Creamy, soft wood — like a countryside house', poetic:'Like the smell of a fireplace in your countryside house, where you sit after a long hot summer day.'}
+      {
+        id:'cognac',
+        name:'Cognac',
+        emoji:'🥃',
+        color:'#b97b3c',
+        short:'Warm, boozy heart — like a family celebration.',
+        poetic:"A golden laugh when family gathers on New Year’s Eve."
+      },
+      {
+        id:'cinnamon',
+        name:'Cinnamon',
+        emoji:'🌶️',
+        color:'#b24e1b',
+        short:'The smell of your favorite Christmas bun.',
+        poetic:"A box of cinnamon buns you can’t wait to eat."
+      },
+      {
+        id:'praline',
+        name:'Praline',
+        emoji:'🍬',
+        color:'#c78f62',
+        short:'Sugared, soft and round — a dream of a sweet future.',
+        poetic:"Childhood candied afternoons and dreams of future surprises — sweet, slightly smoky."
+      },
+      {
+        id:'vanilla',
+        name:'Vanilla',
+        emoji:'🌿',
+        color:'#e6cfa7',
+        short:'Comforting and familiar — like ice cream.',
+        poetic:"A refreshing pause for hot, sunny days."
+      },
+      {
+        id:'oak',
+        name:'Oak wood',
+        emoji:'🌳',
+        color:'#6b4a32',
+        short:'Dry wood — a forest walk for berries.',
+        poetic:"A long walk through the forest on the way to the beach."
+      },
+      {
+        id:'tonka',
+        name:'Tonka bean',
+        emoji:'🌰',
+        color:'#b58f6e',
+        short:'Sweetness with almond hints — dreaming of faraway lands.',
+        poetic:"An intriguing aroma that invites curiosity and discovery."
+      },
+      {
+        id:'sandal',
+        name:'Sandalwood',
+        emoji:'🪵',
+        color:'#8b6a54',
+        short:'Creamy, soft wood — like a countryside house.',
+        poetic:"The cozy scent of a fireplace in your country house after a long summer day."
+      }
     ];
 
     const container = document.getElementById('ingredients');
@@ -296,7 +348,21 @@
 
       const lead = vals.map(v=>v.name).slice(0,3).join(', ');
       const sensory = vals.map(v=>v.poetic).join(' ');
-      const emotional = "It feels like an intimate secret shared over late-night music: warm, a little sinful, and entirely yours.";
+
+      // >>> Your vibe-based endings <<<
+      let emotional = "It feels like an intimate secret shared over late-night music: warm, a little sinful, and entirely yours.";
+      const hasSpice = vals.some(v => v.id === 'cinnamon' || v.id === 'cognac');
+      const hasWoods = vals.some(v => v.id === 'oak' || v.id === 'sandal');
+      const hasGourmand = vals.some(v => ['praline','vanilla','tonka'].includes(v.id));
+
+      if (hasSpice && hasWoods) {
+        emotional = "Intimate, steady, and quietly magnetic - it feels like a dark sleepless night.";
+      } else if (hasGourmand) {
+        emotional = "Comfort that lingers like a sweet whisper — indulgent yet elegant.";
+      } else if (hasWoods) {
+        emotional = "Like polished wood and soft light — calm, grounded, assured.";
+      }
+      // <<< end custom endings >>>
 
       title.textContent = `Angels' Share — ${lead}`;
       text.textContent = sensory + " " + emotional;
