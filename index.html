@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MilanaMironovaBeautyEvaluation - Angels Share by Kilian</title>
+
+  <!-- Luxury typefaces -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0f0f10; 
+      --card:#141416; 
+      --gold:#d6a85a; 
+      --muted:#bdb8b0; 
+      --glass:rgba(255,255,255,0.04);
+      --headline:#e9e6e0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, 'Helvetica Neue', Arial;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;min-height:100vh;color:#eee;
+      /* depth + vignette */
+      background:
+        radial-gradient(1200px 600px at 50% -10%, rgba(214,168,90,0.06), transparent 60%),
+        radial-gradient(1000px 500px at 80% 120%, rgba(255,255,255,0.03), transparent 70%),
+        linear-gradient(180deg,#080808 0%, #121214 60%);
+    }
+    /* optional ultra-subtle grain */
+    body::before{
+      content:""; position:fixed; inset:0; pointer-events:none; opacity:.05;
+      background-image: url("data:image/svg+xml;utf8,      <svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'>      <filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter>      <rect width='100%' height='100%' filter='url(%23n)' opacity='0.15'/></svg>");
+    }
+
+    /* Header (centered, elegant divider) */
+    header{
+      padding: 32px 32px 40px;
+      display:flex; justify-content:center; text-align:center;
+      position:relative; border-bottom:none;
+    }
+    header::after{
+      content:""; display:block; width:140px; height:2px; 
+      position:absolute; left:50%; transform:translateX(-50%); bottom:18px;
+      background: linear-gradient(90deg, transparent, rgba(214,168,90,0.8), transparent);
+      border-radius:2px;
+    }
+    .brand{
+      display:flex; flex-direction:column; align-items:center; gap:10px;
+    }
+    h1{
+      font-family:"Playfair Display", Georgia, "Times New Roman", serif;
+      font-size:28px; letter-spacing:0.5px; margin:0; color:var(--headline);
+    }
+    p.lead{margin:0;color:var(--muted);font-size:17px;line-height: 1.6;max-width: 720px;}
+
+    main{display:grid;grid-template-columns:360px 1fr;gap:28px;padding:28px}
+
+    /* Panels */
+    .panel{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:14px; padding:18px; border:1px solid rgba(255,255,255,0.03)
+    }
+    .ingredients{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+
+    /* Ingredient cards (polished) */
+    .card{
+      display:flex;gap:12px;align-items:center;padding:12px;border-radius:14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      cursor:pointer; border:1px solid rgba(255,255,255,0.06);
+      transition:transform .16s, box-shadow .16s, border-color .16s;
+    }
+    .card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,0.55)}
+    .card.selected{
+      outline:1px solid rgba(214,168,90,0.35);
+      box-shadow:0 14px 32px rgba(214,168,90,0.10);
+    }
+    .pill{width:52px;height:52px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+    .meta{flex:1}
+    .name{font-weight:600}
+    .desc{font-size:13px;color:var(--muted);margin-top:6px}
+
+    /* Right panel */
+    .stage{padding:18px;min-height:420px;display:flex;flex-direction:column;gap:18px}
+    .mixer{
+      flex:1;border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.03);
+      display:flex;gap:18px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+    }
+
+    /* Bottle shot panel (framed, moody) */
+    .bowl {
+  flex: 0 0 auto;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  background: none;
+  border: 1px solid rgba(214,168,90,0.12);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.20);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 500px;   /* make it bigger */
+  margin: 0 auto;     /* center it */
+}
+.bowl::after{ display:none; }                 /* ⬅️ remove vignette overlay */
+.bowl img {
+  width: 100%;
+  height: auto;       /* keep proportions */
+  border-radius: 12px;
+  filter: none;
+}
+
+    .mix-list{flex:1;padding:8px;display:flex;flex-direction:column;gap:8px}
+    .mix-row{
+      display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;
+      background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.06)
+    }
+
+    /* Buttons (muted gold, focus, hover glow) */
+    .controls{display:flex;gap:12px;align-items:center}
+    button{
+      background: linear-gradient(180deg, rgba(214,168,90,0.9), rgba(214,168,90,0.7));
+      border: 1px solid rgba(214,168,90,0.4);
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: #fff; cursor: pointer; font-weight: 700; letter-spacing:.2px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    #mix{ padding:12px 18px; } /* primary action a tad bigger */
+    button:hover{ transform: translateY(-2px); box-shadow: 0 6px 18px rgba(214,168,90,0.25); }
+    button:focus-visible{ outline:2px solid rgba(214,168,90,0.65); outline-offset:2px; }
+    button.ghost{
+      background: transparent; border: 1px solid rgba(255,255,255,0.2);
+      color: var(--muted); font-weight: 600;
+    }
+
+    footer{padding:18px 32px;color:var(--muted);font-size:13px}
+
+    /* Reveal (label-like) */
+    .reveal{
+      margin-top:12px;padding:14px;border-radius:12px;
+      background:linear-gradient(180deg, rgba(214,168,90,0.06), rgba(214,168,90,0.02));
+      border:1px solid rgba(214,168,90,0.18); color:#ddd;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.45);
+    }
+    .reveal h3{
+      margin:0;font-size:16px;color:#ddd;
+      font-family:"Playfair Display", Georgia, "Times New Roman", serif;
+      font-weight:700; letter-spacing:0.3px;
+    }
+    .reveal p{margin:8px 0 0;font-size:13px;color:#eee; line-height:1.55}
+
+    /* Gentle motion for reveal */
+    @keyframes fadeUp{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+    #reveal[style*="display: block"]{ animation: fadeUp .28s ease-out; }
+
+    /* Accessibility: respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none !important; transition:none !important;}
+    }
+
+    /* Responsive */
+    @media (max-width:980px){
+      main{grid-template-columns:1fr;padding:18px}
+      .bowl{display:none}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>Angels' Share by Kilian</h1>
+      <p class="lead">Mix the notes of Kilian’s Angels’ Share and receive poetic descriptions for every blend.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2 style="margin:0;font-size:15px">Ingredients</h2>
+      <p style="margin-top:8px;color:var(--muted);font-size:13px">Click to add or remove. Each selection fills the bowl and alters the final note.</p>
+
+      <div class="ingredients" id="ingredients"></div>
+
+      <div style="margin-top:14px;display:flex;gap:8px">
+        <button id="random">Surprise mix</button>
+        <button id="clear" class="ghost">Clear</button>
+      </div>
+    </section>
+
+    <section class="panel stage">
+      <div class="mixer">
+        <div class="bowl">
+          <img src="/Users/milanamironova/Desktop/angels-share-mixer/AngelsShare.png" alt="Angels' Share" decoding="async">
+        </div>
+
+        <div class="mix-list">
+          <div class="mix-row"><strong>Selected</strong><span id="count">0</span></div>
+          <div id="selectedList"></div>
+
+          <div class="controls">
+            <button id="mix">Mix & Reveal</button>
+          </div>
+
+          <div id="reveal" style="display:none" class="reveal">
+            <h3 id="revealTitle">Angels' Share — Your Personal Take</h3>
+            <p id="revealText"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const ingredients = [
+      {id:'cognac', name:'Cognac', emoji:'🥃', color:'#b97b3c', short:'Warm boozy heart — amber liquid heat', poetic:'Like a golden laugh at midnight: strong, smooth, and memory-rich.'},
+      {id:'cinnamon', name:'Cinnamon', emoji:'🌶️', color:'#b24e1b', short:'Spicy warmth with gentle bite', poetic:'A violin that trembles softly — spice pushing the melody forward.'},
+      {id:'praline', name:'Praline', emoji:'🍬', color:'#c78f62', short:'Sugared nut whisper, soft and round', poetic:'Childhood candied afternoons — sweet, slightly smoky, wholly indulgent.'},
+      {id:'vanilla', name:'Vanilla', emoji:'🌿', color:'#e6cfa7', short:'Creamy vanilla, comforting and familiar', poetic:'A warm sweater and slow breaths — calm, embracing, intimate.'},
+      {id:'oak', name:'Oak wood', emoji:'🌳', color:'#6b4a32', short:'Dry wood, grounding and austere', poetic:'An old book whose pages remember long conversations.'},
+      {id:'tonka', name:'Tonka bean', emoji:'🌰', color:'#b58f6e', short:'Smoky, hay-like sweetness with almond hints', poetic:'A dusk-lit field where laughter folds into the scent of hay.'},
+      {id:'sandal', name:'Sandalwood', emoji:'🪵', color:'#8b6a54', short:'Creamy, soft wood — sensual and round', poetic:'A low cello note — warm, polished, and tender.'}
+    ];
+
+    const container = document.getElementById('ingredients');
+    const selected = new Map();
+
+    function renderIngredients(){
+      container.innerHTML = '';
+      ingredients.forEach(ing =>{
+        const el = document.createElement('div');
+        el.className='card';
+        el.dataset.id = ing.id;
+        el.innerHTML = `
+          <div class="pill" style="background:linear-gradient(180deg,${ing.color},rgba(0,0,0,0.25));color:#111;font-weight:700">${ing.emoji}</div>
+          <div class="meta">
+            <div class="name">${ing.name}</div>
+            <div class="desc">${ing.short}</div>
+          </div>
+        `;
+        el.addEventListener('click', ()=> toggleSelect(ing, el));
+        container.appendChild(el);
+      })
+    }
+
+    function toggleSelect(ing, el){
+      if(selected.has(ing.id)){
+        selected.delete(ing.id);
+        el.classList.remove('selected');
+      } else {
+        selected.set(ing.id, ing);
+        el.classList.add('selected');
+      }
+      updateMixer();
+    }
+
+    function updateMixer(){
+      const list = document.getElementById('selectedList');
+      const count = document.getElementById('count');
+      list.innerHTML = '';
+
+      const vals = Array.from(selected.values());
+      count.textContent = vals.length;
+
+      vals.forEach(v=>{
+        const r = document.createElement('div');
+        r.className='mix-row';
+        r.innerHTML = `<div>${v.emoji} ${v.name}</div><div style="color:var(--muted);font-size:13px">${v.short}</div>`;
+        list.appendChild(r);
+      });
+    }
+
+    document.getElementById('clear').addEventListener('click', ()=>{
+      selected.clear();
+      document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
+      updateMixer();
+    });
+
+    document.getElementById('random').addEventListener('click', ()=>{
+      selected.clear();
+      const shuffled = ingredients.sort(()=>0.5-Math.random()).slice(0, Math.floor(Math.random()*3)+3);
+      shuffled.forEach(s=>selected.set(s.id,s));
+      document.querySelectorAll('.card').forEach(c=>{
+        c.classList.toggle('selected', selected.has(c.dataset.id))
+      })
+      updateMixer();
+    });
+
+    document.getElementById('mix').addEventListener('click', ()=>{
+      const vals = Array.from(selected.values());
+      const reveal = document.getElementById('reveal');
+      const title = document.getElementById('revealTitle');
+      const text = document.getElementById('revealText');
+      if(vals.length===0){
+        alert('Choose at least one ingredient to mix.');
+        return;
+      }
+
+      const lead = vals.map(v=>v.name).slice(0,3).join(', ');
+      const sensory = vals.map(v=>v.poetic).join(' ');
+      const emotional = "It feels like an intimate secret shared over late-night music: warm, a little sinful, and entirely yours.";
+
+      title.textContent = `Angels' Share — ${lead}`;
+      text.textContent = sensory + " " + emotional;
+      reveal.style.display = 'block';
+
+      document.getElementById('export').textContent = 'Copy description';
+    });
+
+    renderIngredients();
+    updateMixer();
+  </script>
+</body>
+</html>
